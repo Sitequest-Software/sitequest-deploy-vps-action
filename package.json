@@ -1,0 +1,32 @@
+{
+  "name": "sitequest-deploy-vps-action",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action: Capistrano-style atomic deploy to a Sitequest VPS via the REST API.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/main.ts -o dist --source-map --license licenses.txt",
+    "lint": "tsc --noEmit",
+    "all": "bun run lint && bun run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitequest/deploy-vps-action.git"
+  },
+  "keywords": [
+    "github-action",
+    "sitequest",
+    "deploy",
+    "vps",
+    "capistrano"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.11.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vercel/ncc": "^0.38.3",
+    "typescript": "^5.7.0"
+  }
+}

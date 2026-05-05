@@ -1,0 +1,49 @@
+name: "Sitequest Deploy VPS"
+description: "Capistrano-style atomic deploy to a Sitequest VPS via the REST API. No SSH keys required."
+author: "Sitequest"
+branding:
+  icon: "upload-cloud"
+  color: "black"
+
+inputs:
+  api-key:
+    description: "Sitequest API key with the `vps:manage` scope."
+    required: true
+  vps-id:
+    description: "Target VPS ID."
+    required: true
+  source:
+    description: "Local directory to deploy (the build output)."
+    required: false
+    default: "dist"
+  target-base:
+    description: "Absolute base path on the VPS. Releases go in `<target-base>/releases/<run-id>/`, symlink at `<target-base>/current`."
+    required: true
+  keep-releases:
+    description: "Number of past releases to retain for rollback (default 5, set 0 to keep all)."
+    required: false
+    default: "5"
+  restart-service:
+    description: "Optional systemd unit to restart after the symlink swap (e.g. `myapp.service`). Multiple units comma-separated."
+    required: false
+    default: ""
+  owner:
+    description: "Optional `user:group` to chown the release to after extraction (default: leave as-is)."
+    required: false
+    default: ""
+  api-base:
+    description: "Override the API base URL (for staging or self-hosted)."
+    required: false
+    default: "https://hosting.site.quest"
+
+outputs:
+  release-path:
+    description: "Absolute path of the new release directory on the VPS."
+  bytes-uploaded:
+    description: "Size of the uploaded tar.gz archive in bytes."
+  duration-ms:
+    description: "End-to-end deploy duration."
+
+runs:
+  using: "node24"
+  main: "dist/index.js"
